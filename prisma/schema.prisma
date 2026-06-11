@@ -1,0 +1,110 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [vector]
+}
+
+model Project {
+  id                  String             @id @default(uuid())
+  title               String
+  problemStatement    String             // Problem description
+  integrations        String[]           // Integration targets (e.g. Veeva, Adobe Target)
+  budgetStatus        String             // Budget availability details
+  stakeholderStatus   String             // Stakeholder alignment details
+  opportunityCost     String             // Impact of not doing the project
+  businessCase        String             // Financial Business Case text
+  financialRoi        Float              // Annualized ROI in USD
+  budgetRequiredVal   Float              // Implementation cost in USD
+  execSponsor         String
+  productOwner        String
+  deploymentGateway   String             // Production URL
+  phase               String             // "Draft" | "Backlog" | "Working" | "Ready" | "Scheduled"
+  submittedBy         String             @default("")  // Persona name who submitted
+  submittedAt         DateTime?
+  feedback            String             @default("")
+  
+  // Cross-therapeutic areas
+  therapeuticAreas    String[]
+  
+  // 6 Scorecard vectors (0.0 to 100.0)
+  budgetAvailabilityScore     Float
+  dataAvailabilityScore       Float
+  stakeholderReadinessScore   Float
+  impactOfNotDoingScore       Float
+  financialBusinessCaseScore  Float
+  budgetRequiredScore         Float
+  readinessScore              Float      // Computed weighted average
+  
+  // Specialist Agent Insights & Aggregate Idea Score
+  ideaScore                   Float      @default(70.0)
+  checkerInsight              String     @default("")
+  brainstormerInsight         String     @default("")
+  validatorInsight            String     @default("")
+  businessCaseInsight         String     @default("")
+  criticInsight               String     @default("")
+  
+  // 3-year financial model
+  financialRoiY1              Float      @default(0.0)
+  financialRoiY2              Float      @default(0.0)
+  financialRoiY3              Float      @default(0.0)
+  budgetRequiredY1            Float      @default(0.0)
+  budgetRequiredY2            Float      @default(0.0)
+  budgetRequiredY3            Float      @default(0.0)
+
+  // Extra details requested by steering committee
+  businessCaseRationale      String     @default("")
+  dependencies                String     @default("")
+  businessCaseFile            String     @default("")
+  
+  functionalDomains   String[]           // e.g., ["Omnichannel Intelligence"]
+  
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  embeddings          ProjectEmbedding[]
+}
+
+model ProjectEmbedding {
+  id        String                @id @default(uuid())
+  projectId String                @unique
+  project   Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  embedding Unsupported("vector")
+  createdAt DateTime              @default(now())
+}
+
+model Expert {
+  id            String            @id @default(uuid())
+  name          String
+  title         String
+  organization  String            // e.g., Global Data Science
+  availability  String            // "Available" | "Busy" | "Limited"
+  email         String
+  teamsId       String            // Active Directory lookup username
+  competencies  String[]          // e.g., ["NLP", "Machine Learning"]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  embeddings    ExpertEmbedding[]
+}
+
+model ExpertEmbedding {
+  id        String                @id @default(uuid())
+  expertId  String                @unique
+  expert    Expert                @relation(fields: [expertId], references: [id], onDelete: Cascade)
+  embedding Unsupported("vector")
+  createdAt DateTime              @default(now())
+}
+
+model MeetingIngestion {
+  id        String   @id @default(uuid())
+  fileName  String?
+  content   String
+  parsedAt  DateTime @default(now())
+}
+
+model SystemConfig {
+  key   String @id
+  value String
+}
