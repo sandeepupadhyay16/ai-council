@@ -461,6 +461,9 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     const saved = localStorage.getItem('pfizer_ai_persona') as PersonaRole;
     if (saved && PERSONAS[saved]) {
       setRole(saved);
+    } else if (saved) {
+      // Clear stale persona from old role system (e.g. CMO_LEADER, BRAND_MANAGER, TECH_EXPERT)
+      localStorage.removeItem('pfizer_ai_persona');
     }
     
     // Fetch weights config from server
