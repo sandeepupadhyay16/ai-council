@@ -32,7 +32,7 @@ import {
   Coins
 } from 'lucide-react';
 
-export type PersonaRole = 'CMO_LEADER' | 'BRAND_MANAGER' | 'TECH_EXPERT';
+export type PersonaRole = 'ADMIN' | 'USER';
 
 export interface Persona {
   role: PersonaRole;
@@ -45,32 +45,23 @@ export interface Persona {
 }
 
 export const PERSONAS: Record<PersonaRole, Persona> = {
-  CMO_LEADER: {
-    role: 'CMO_LEADER',
+  ADMIN: {
+    role: 'ADMIN',
     name: 'Dr. Angela Vance',
     title: 'VP of Oncology Marketing & AI Council Lead',
     avatar: 'AV',
-    badge: 'Steering Committee (Admin)',
+    badge: 'Admin',
     color: 'from-pink-500 to-purple-600',
-    description: 'Full administrative access. Authorized to override readiness scores, configure portfolio weights, and query strategic RAG dashboard.'
+    description: 'Full administrative access. Authorized to override readiness scores, configure portfolio weights, manage lifecycle, and query strategic RAG dashboard.'
   },
-  BRAND_MANAGER: {
-    role: 'BRAND_MANAGER',
+  USER: {
+    role: 'USER',
     name: 'Marcus Broady',
     title: 'Senior Brand Manager, Vaccines',
     avatar: 'MB',
-    badge: 'Commercial Stakeholder',
+    badge: 'User',
     color: 'from-blue-500 to-cyan-500',
     description: 'Submit and wizard-draft new AI initiatives. Search available portfolio tools, explore experts, and track active proposals.'
-  },
-  TECH_EXPERT: {
-    role: 'TECH_EXPERT',
-    name: 'Elena Rostova',
-    title: 'Elena Rostova',
-    avatar: 'ER',
-    badge: 'Technical Expert',
-    color: 'from-emerald-500 to-teal-500',
-    description: 'Read-only access to commercial portals. Edit profile skillsets, align on technical integrations, and collaborate with brand teams.'
   }
 };
 
@@ -341,7 +332,7 @@ const FUNNY_LOADING_MESSAGES = [
 ];
 
 export default function ClientWrapper({ children }: { children: React.ReactNode }) {
-  const [role, setRole] = useState<PersonaRole>('CMO_LEADER');
+  const [role, setRole] = useState<PersonaRole>('ADMIN');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [weights, setWeights] = useState<number[]>([0.16, 0.16, 0.17, 0.17, 0.17, 0.17]); // 6 weights default
   const pathname = usePathname();
@@ -985,13 +976,13 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
   const currentPersona = PERSONAS[role];
 
   const navItems = [
-    { name: 'Vision & Steering', href: '/', icon: Home, roles: ['CMO_LEADER', 'BRAND_MANAGER', 'TECH_EXPERT'] },
-    { name: 'Project Marketplace', href: '/marketplace', icon: ShoppingBag, roles: ['CMO_LEADER', 'BRAND_MANAGER', 'TECH_EXPERT'] },
-    { name: 'My Ideas & Workspace', href: '/my-ideas', icon: ClipboardList, roles: ['CMO_LEADER', 'BRAND_MANAGER', 'TECH_EXPERT'] },
-    { name: 'Lifecycle Board', href: '/lifecycle', icon: Layers, roles: ['CMO_LEADER', 'BRAND_MANAGER', 'TECH_EXPERT'] },
-    { name: 'Intake & Wizard', href: '/intake', icon: FilePlus, roles: ['CMO_LEADER', 'BRAND_MANAGER'] },
-    { name: 'Expert Directory', href: '/directory', icon: Users, roles: ['CMO_LEADER', 'BRAND_MANAGER', 'TECH_EXPERT'] },
-    { name: 'Portfolio Insights & Q&A', href: '/insights', icon: BarChart2, roles: ['CMO_LEADER'] },
+    { name: 'Vision & Steering', href: '/', icon: Home, roles: ['ADMIN', 'USER'] },
+    { name: 'Project Marketplace', href: '/marketplace', icon: ShoppingBag, roles: ['ADMIN', 'USER'] },
+    { name: 'My Ideas & Workspace', href: '/my-ideas', icon: ClipboardList, roles: ['ADMIN', 'USER'] },
+    { name: 'Lifecycle Board', href: '/lifecycle', icon: Layers, roles: ['ADMIN'] },
+    { name: 'Intake & Wizard', href: '/intake', icon: FilePlus, roles: ['ADMIN', 'USER'] },
+    { name: 'Expert Directory', href: '/directory', icon: Users, roles: ['ADMIN', 'USER'] },
+    { name: 'Portfolio Insights & Q&A', href: '/insights', icon: BarChart2, roles: ['ADMIN'] },
   ];
 
   return (

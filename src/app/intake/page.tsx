@@ -181,7 +181,7 @@ export default function IntakePage() {
           businessCase,
           financialRoi: Number(roiY1),
           budgetRequiredVal: Number(bY1) + Number(bY2) + Number(bY3),
-          execSponsor: currentPersona.role === 'CMO_LEADER' ? currentPersona.name : 'TBD',
+          execSponsor: currentPersona.role === 'ADMIN' ? currentPersona.name : 'TBD',
           productOwner: 'TBD',
           deploymentGateway: '',
           phase: 'Draft',
@@ -492,7 +492,7 @@ export default function IntakePage() {
           businessCase,
           financialRoi: Number(roiY1),
           budgetRequiredVal: Number(bY1) + Number(bY2) + Number(bY3),
-          execSponsor: currentPersona.role === 'CMO_LEADER' ? currentPersona.name : 'TBD',
+          execSponsor: currentPersona.role === 'ADMIN' ? currentPersona.name : 'TBD',
           productOwner: 'TBD',
           deploymentGateway: '',
           phase: 'Backlog',
@@ -1044,7 +1044,7 @@ export default function IntakePage() {
                   <span>Steering Override Panel</span>
                 </h4>
                 
-                {currentPersona.role === 'CMO_LEADER' ? (
+                {currentPersona.role === 'ADMIN' ? (
                   <div className="space-y-4">
                     <p className="text-[10px] text-slate-550 leading-relaxed bg-[#fffaf0] p-3 rounded-lg border border-slate-200">
                       You are logged in as <span className="font-semibold text-pink-500">Dr. Angela Vance</span> (Council Lead). You can adjust specific evaluation scores manually before saving.
@@ -1133,7 +1133,7 @@ export default function IntakePage() {
                 ) : (
                   <div className="p-4 rounded-xl border border-amber-200 bg-amber-50 flex gap-3 text-xs leading-relaxed text-amber-800">
                     <ShieldAlert size={16} className="shrink-0 mt-0.5 text-amber-600" />
-                    <span>Administrative score override is locked. Toggles are restricted to the CMO Executive Steering persona.</span>
+                    <span>Administrative score override is locked. Switch to the Admin persona to unlock controls.</span>
                   </div>
                 )}
               </div>

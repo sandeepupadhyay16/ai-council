@@ -66,6 +66,25 @@ export default function LifecyclePage() {
     }
   };
 
+  if (currentPersona.role !== 'ADMIN') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] animate-fadeIn">
+        <div className="p-8 rounded-3xl border border-slate-200 bg-white shadow-lg max-w-md text-center space-y-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center mx-auto shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h2 className="text-xl font-bold text-slate-900">Access Restricted</h2>
+          <p className="text-sm text-slate-500 leading-relaxed">
+            The <span className="font-semibold text-slate-700">Lifecycle Board</span> is restricted to Admin users. Track your idea statuses in <a href="/my-ideas" className="text-pink-500 hover:underline font-semibold">My Ideas & Workspace</a>.
+          </p>
+          <a href="/" className="inline-block mt-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition-all">
+            Return to Dashboard
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8 animate-fadeIn text-slate-900">
       {/* Title Header */}

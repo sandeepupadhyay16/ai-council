@@ -120,14 +120,12 @@ export default function HomePage() {
               <ArrowRight size={14} />
             </Link>
             
-            {currentPersona.role !== 'TECH_EXPERT' && (
-              <Link 
-                href="/intake"
-                className="px-6 py-3 rounded-xl bg-white border border-slate-250 hover:bg-slate-50 text-slate-700 font-semibold text-xs active:scale-95 transition-all"
-              >
-                Submit Use Case
-              </Link>
-            )}
+            <Link 
+              href="/intake"
+              className="px-6 py-3 rounded-xl bg-white border border-slate-250 hover:bg-slate-50 text-slate-700 font-semibold text-xs active:scale-95 transition-all"
+            >
+              Submit Use Case
+            </Link>
           </div>
         </div>
       </section>

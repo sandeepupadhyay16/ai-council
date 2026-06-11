@@ -520,7 +520,7 @@ export default function ProjectDetailModal({ project, onClose, onRefresh }: Proj
         {/* Actions */}
         <div className="flex justify-between items-center pt-4 border-t border-slate-250">
           <div className="flex gap-2">
-            {currentPersona?.role === 'CMO_LEADER' && project.phase === 'Backlog' && !showSendBackForm && (
+            {currentPersona?.role === 'ADMIN' && project.phase === 'Backlog' && !showSendBackForm && (
               <>
                 <button
                   type="button"

@@ -67,15 +67,13 @@ export default function MarketplacePage() {
           <p className="text-slate-550 text-sm mt-1">Discover, collaborate, and deploy validated Pfizer commercial sales & marketing AI assets.</p>
         </div>
         
-        {currentPersona.role !== 'TECH_EXPERT' && (
-          <Link 
+        <Link 
             href="/intake"
             className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-all flex items-center gap-1.5 self-start shadow-sm cursor-pointer"
           >
             <Plus size={14} />
             <span>Submit New Concept</span>
           </Link>
-        )}
       </div>
 
       {/* Filter and Search Panel */}

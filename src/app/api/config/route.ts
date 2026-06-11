@@ -24,9 +24,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { weights, role } = body;
 
-    // Check authorization (only CMO Leader / Admin can configure weights)
-    if (role !== 'CMO_LEADER') {
-      return NextResponse.json({ error: 'Unauthorized. Only the CMO Executive Steering committee can configure scorecard weights.' }, { status: 403 });
+    // Check authorization (only Admin can configure weights)
+    if (role !== 'ADMIN') {
+      return NextResponse.json({ error: 'Unauthorized. Only the Admin can configure scorecard weights.' }, { status: 403 });
     }
 
     if (!Array.isArray(weights) || weights.length !== 6) {
