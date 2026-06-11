@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       .map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
       .join('\n');
 
-    const systemPrompt = `You are a Pfizer AI Council expert. Your job is to extract a commercial/marketing AI initiative or use case from the chat log.
+    const systemPrompt = `You are an AI Council expert. Your job is to extract a commercial/marketing AI initiative or use case from the chat log.
 You MUST return a valid JSON object. Do not include markdown formatting or code block markers (\`\`\`). The response must contain exactly this JSON format:
 {
   "title": "A short, descriptive, professional name of the AI project",

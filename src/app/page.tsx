@@ -108,7 +108,7 @@ export default function HomePage() {
           </h1>
           
           <p className="text-slate-655 text-base md:text-lg leading-relaxed font-medium">
-            The Pfizer Commercial AI Tech Think Tank transitions sales & marketing adoption from symbolic experimentation to purposeful execution. We ingest operational goals, grade compliance, match technical talent, and track AI initiatives globally.
+            The Commercial AI Tech Think Tank transitions sales & marketing adoption from symbolic experimentation to purposeful execution. We ingest operational goals, grade compliance, match technical talent, and track AI initiatives globally.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
@@ -140,7 +140,7 @@ export default function HomePage() {
           </div>
           <h3 className="text-base font-bold text-slate-900 uppercase tracking-wider">Strategic Vision</h3>
           <p className="text-xs text-slate-655 leading-relaxed font-semibold">
-            To be the central catalyst for transforming commercial operations at Pfizer. We envision a portfolio of high-impact, compliant, and scale-ready AI systems that directly accelerate market access, disease awareness, and precision brand alignment.
+            To be the central catalyst for transforming commercial operations across the enterprise. We envision a portfolio of high-impact, compliant, and scale-ready AI systems that directly accelerate market access, disease awareness, and precision brand alignment.
           </p>
         </div>
 
@@ -375,7 +375,7 @@ export default function HomePage() {
                 Close
               </button>
               <a 
-                href={`mailto:${selectedLeader.name.toLowerCase().replace('. ', '.').replace(' ', '.')}@pfizer.com?subject=AI Council Inquiry`}
+                href={`mailto:${selectedLeader.name.toLowerCase().replace('. ', '.').replace(' ', '.')}@company.com?subject=AI Council Inquiry`}
                 className="px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
                 <Briefcase size={12} />

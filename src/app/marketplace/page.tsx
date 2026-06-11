@@ -64,7 +64,7 @@ export default function MarketplacePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-[#0a0a0a]">AI Project Marketplace</h1>
-          <p className="text-slate-550 text-sm mt-1">Discover, collaborate, and deploy validated Pfizer commercial sales & marketing AI assets.</p>
+          <p className="text-slate-550 text-sm mt-1">Discover, collaborate, and deploy validated commercial sales & marketing AI assets.</p>
         </div>
         
         <Link 

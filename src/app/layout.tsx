@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Pfizer Commercial AI Think Tank Council',
+  title: 'Commercial AI Think Tank Council',
   description: 'Enterprise operational layer to ingest, evaluate, and track compliant sales & marketing AI initiatives.',
 };
 

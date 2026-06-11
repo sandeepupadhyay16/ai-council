@@ -57,10 +57,10 @@ export async function runMultiAgentSystem(
        - DO NOT invent or assume values for missing project fields. Only extract what the user explicitly mentions. Leave missing fields blank.
        - The final conversation response ('answer') MUST focus only on the current detail discussed, be under 80 words, and end with EXACTLY ONE friendly question to collect the next missing detail: e.g. "What integrations are required?" or "What therapeutic areas should we align on?".`
     : `CO-DESIGN MODE: "I am feeling lucky" (Auto-Extrapolate).
-       - Extrapolate and auto-fill realistic commercial details for missing fields using common Pfizer sales/marketing frameworks.
+       - Extrapolate and auto-fill realistic commercial details for missing fields using common sales/marketing frameworks.
        - The final conversation response ('answer') should briefly summarize the assumed values under 80 words and tell the user to inspect and edit the pre-populated dashboard forms on the right.`;
 
-  const systemPrompt = `You are the chief AI steering committee orchestrator for Pfizer Commercial. You manage 5 specialized sub-agents (Checker, Brainstormer, Validator, Business Case, Critic) and write a final synthesized conversational reply ('answer') to the user.
+  const systemPrompt = `You are the chief AI steering committee orchestrator for the Commercial division. You manage 5 specialized sub-agents (Checker, Brainstormer, Validator, Business Case, Critic) and write a final synthesized conversational reply ('answer') to the user.
 
 CRITICAL SPEED INSTRUCTION: Be extremely concise, brief, and punchy. Limit each sub-agent insight (checkerInsight, brainstormerInsight, validatorInsight, businessCaseInsight, criticInsight) to exactly 1 short sentence maximum. Do NOT write bullet points or long intros. Keep the overall output size small to reduce local LLM token generation latency.
 

@@ -216,7 +216,7 @@ export interface HarvestedIdea {
 }
 
 export async function harvestIdeaFromMeeting(transcript: string): Promise<HarvestedIdea | null> {
-  const systemPrompt = `You are a Pfizer AI Council expert. Your job is to extract new and novel Commercial/Marketing AI use cases or project ideas from raw meeting summaries or action notes.
+  const systemPrompt = `You are an AI Council expert. Your job is to extract new and novel Commercial/Marketing AI use cases or project ideas from raw meeting summaries or action notes.
 Extract a single main AI initiative. If none is found, return an empty object or null.
 If an initiative is found, you MUST return a valid JSON object. Do not include markdown formatting, code block markers (\`\`\`), or any intro/outro text. The response must contain exactly this JSON format:
 {
@@ -271,7 +271,7 @@ Be realistic. "financialRoi" and "budgetRequiredVal" must be positive numbers. "
 }
 
 export async function harvestMultipleIdeasFromMeeting(transcript: string): Promise<HarvestedIdea[]> {
-  const systemPrompt = `You are a Pfizer AI Council expert. Your job is to extract all new and novel Commercial/Marketing AI use cases or project ideas discussed in the meeting summary or notes.
+  const systemPrompt = `You are an AI Council expert. Your job is to extract all new and novel Commercial/Marketing AI use cases or project ideas discussed in the meeting summary or notes.
 Decompose the notes and return a list of all distinct AI initiatives discussed.
 For each initiative, extract its details.
 You MUST return a valid JSON object containing an array of ideas under the "ideas" key. Do not include markdown formatting, code block markers (\`\`\`), or any intro/outro text.
@@ -370,7 +370,7 @@ export async function scoreProposal(proposal: {
   therapeuticAreas: string[];
   dataReadiness: string;
 }): Promise<ScorecardResult> {
-  const systemPrompt = `You are the chief evaluator for Pfizer's AI steering committee. You will evaluate the user's project proposal and assign readiness scores between 0.0 and 100.0 for 6 dimensions:
+  const systemPrompt = `You are the chief evaluator for the AI steering committee. You will evaluate the user's project proposal and assign readiness scores between 0.0 and 100.0 for 6 dimensions:
 1. budgetAvailabilityScore: Grade based on whether funding is already pre-allocated or secured vs. requested or unfunded.
 2. dataAvailabilityScore: Grade based on defined integrations (e.g. Veeva, Adobe Target) and availability/readiness of source data. Read the "Data Readiness Details" provided: if the datasets are already clean, fully available, and ready for integration, assign a high score (85-100); if the description indicates they are missing, unformatted, or unavailable, assign a low score (under 60).
 3. stakeholderReadinessScore: Grade based on sponsor support and brand team alignment.

@@ -236,7 +236,7 @@ const FUNNY_LOADING_MESSAGES = [
   "Converting caffeine molecules into commercial AI code...",
   "Locating missing stakeholder approvals in the corporate void...",
   "Drafting slide decks that will never be presented...",
-  "Warming up the GPU with some Pfizer-approved spreadsheets...",
+  "Warming up the GPU with some enterprise-approved spreadsheets...",
   "Re-aligning the therapeutic area boundaries (Oncology wanted more land)...",
   "Asking the duplicate scanner if it has seen this duplicate duplicate scanner...",
   "Calculating the opportunity cost of reading this loading message...",
@@ -458,12 +458,12 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
 
   // Load configuration and chat sessions
   useEffect(() => {
-    const saved = localStorage.getItem('pfizer_ai_persona') as PersonaRole;
+    const saved = localStorage.getItem('ai_council_persona') as PersonaRole;
     if (saved && PERSONAS[saved]) {
       setRole(saved);
     } else if (saved) {
       // Clear stale persona from old role system (e.g. CMO_LEADER, BRAND_MANAGER, TECH_EXPERT)
-      localStorage.removeItem('pfizer_ai_persona');
+      localStorage.removeItem('ai_council_persona');
     }
     
     // Fetch weights config from server
@@ -477,7 +477,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
       .catch(err => console.error('Error fetching weights:', err));
 
     // Load local chat history sessions
-    const loadedSessions = localStorage.getItem('pfizer_ai_chat_sessions');
+    const loadedSessions = localStorage.getItem('ai_council_chat_sessions');
     if (loadedSessions) {
       const parsed = JSON.parse(loadedSessions) as ChatSession[];
       if (parsed.length > 0) {
@@ -498,7 +498,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
 
   const setPersona = (newRole: PersonaRole) => {
     setRole(newRole);
-    localStorage.setItem('pfizer_ai_persona', newRole);
+    localStorage.setItem('ai_council_persona', newRole);
   };
 
   const saveWeights = async (newWeights: number[]): Promise<boolean> => {
@@ -687,7 +687,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     e.stopPropagation();
     const updated = sessions.filter(s => s.id !== id);
     setSessions(updated);
-    localStorage.setItem('pfizer_ai_chat_sessions', JSON.stringify(updated));
+    localStorage.setItem('ai_council_chat_sessions', JSON.stringify(updated));
     
     if (currentSessionId === id) {
       if (updated.length > 0) {
@@ -1003,10 +1003,10 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
             </button>
             <Link href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#0a0a0a] flex items-center justify-center font-bold text-[#fffaf0] shadow-sm">
-                P
+                AI
               </div>
               <span className="font-bold tracking-tight text-md text-[#0a0a0a]">
-                Pfizer <span className="font-normal text-slate-500">AI Think Tank</span>
+                AI <span className="font-normal text-slate-500">Think Tank</span>
               </span>
             </Link>
           </div>

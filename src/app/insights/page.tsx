@@ -69,7 +69,7 @@ export default function InsightsPage() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Hello! I am your AI Council Board Assistant.\n\nI have semantic access to the Pfizer AI Commercial Portfolio vector store. Ask me complex questions, such as:\n\n* *'Who is the available Machine Learning expert that can help with Oncology NLP projects?'*\n* *'What are the active Vaccine projects and their data readiness scores?'*"
+      content: "Hello! I am your AI Council Board Assistant.\n\nI have semantic access to the AI Commercial Portfolio vector store. Ask me complex questions, such as:\n\n* *'Who is the available Machine Learning expert that can help with Oncology NLP projects?'*\n* *'What are the active Vaccine projects and their data readiness scores?'*"
     }
   ]);
   const [isSending, setIsSending] = useState(false);
