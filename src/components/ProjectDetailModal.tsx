@@ -370,7 +370,7 @@ export default function ProjectDetailModal({ project, onClose, onRefresh }: Proj
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
                     <div className="h-full bg-pink-500" style={{width: `${project.impactOfNotDoingScore || 0}%`}}></div>
                   </div>
-                  OPP COST ({project.impactOfNotDoingScore?.toFixed(0)}%)
+                  IMP NOT DOING ({project.impactOfNotDoingScore?.toFixed(0)}%)
                 </div>
                 <div className="text-[8px] text-center text-slate-550 font-bold">
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
@@ -382,7 +382,7 @@ export default function ProjectDetailModal({ project, onClose, onRefresh }: Proj
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
                     <div className="h-full bg-amber-500" style={{width: `${project.budgetRequiredScore || 0}%`}}></div>
                   </div>
-                  COST REASON ({project.budgetRequiredScore?.toFixed(0)}%)
+                  BUDGET REQ ({project.budgetRequiredScore?.toFixed(0)}%)
                 </div>
               </div>
             </div>
