@@ -212,6 +212,7 @@ export interface HarvestedIdea {
   budgetRequiredVal: number;
   functionalDomains: string[];
   therapeuticAreas: string[];
+  dataReadiness?: string;
 }
 
 export async function harvestIdeaFromMeeting(transcript: string): Promise<HarvestedIdea | null> {
@@ -224,6 +225,7 @@ If an initiative is found, you MUST return a valid JSON object. Do not include m
   "integrations": ["Veeva", "Salesforce CRM", "Adobe Target"],
   "budgetStatus": "Description of funding state or allocation discussed",
   "stakeholderStatus": "Description of alignment, executive sponsorship, or team support discussed",
+  "dataReadiness": "Description of data availability, cleanliness, compliance, or source systems discussed",
   "opportunityCost": "What happens if we do not execute this project? opportunity costs or bottlenecks",
   "businessCase": "Expected operational efficiency, clinical benefits, or brand optimization results",
   "financialRoi": 250000,
@@ -246,6 +248,7 @@ Be realistic. "financialRoi" and "budgetRequiredVal" must be positive numbers. "
     if (idea && idea.title && idea.problemStatement) {
       idea.financialRoi = Number(idea.financialRoi) || 250000;
       idea.budgetRequiredVal = Number(idea.budgetRequiredVal) || 100000;
+      idea.dataReadiness = idea.dataReadiness || '';
       if (!Array.isArray(idea.integrations)) {
         idea.integrations = [];
       }
@@ -281,6 +284,7 @@ The response must conform EXACTLY to this JSON format:
       "integrations": ["Veeva", "Salesforce CRM", "Adobe Target"],
       "budgetStatus": "Description of funding state or allocation discussed",
       "stakeholderStatus": "Description of alignment, executive sponsorship, or team support discussed",
+      "dataReadiness": "Description of data availability, cleanliness, compliance, or source systems discussed",
       "opportunityCost": "What happens if we do not execute this project? opportunity costs or bottlenecks",
       "businessCase": "Expected operational efficiency, clinical benefits, or brand optimization results",
       "financialRoi": 250000,
@@ -325,6 +329,7 @@ Be realistic. "financialRoi" and "budgetRequiredVal" must be positive numbers. "
           integrations,
           budgetStatus: idea.budgetStatus || 'Under Review',
           stakeholderStatus: idea.stakeholderStatus || 'TBD',
+          dataReadiness: idea.dataReadiness || '',
           opportunityCost: idea.opportunityCost || 'Bottleneck remains',
           businessCase: idea.businessCase || '',
           financialRoi,
@@ -363,10 +368,11 @@ export async function scoreProposal(proposal: {
   budgetRequiredVal: number;
   functionalDomains: string[];
   therapeuticAreas: string[];
+  dataReadiness: string;
 }): Promise<ScorecardResult> {
   const systemPrompt = `You are the chief evaluator for Pfizer's AI steering committee. You will evaluate the user's project proposal and assign readiness scores between 0.0 and 100.0 for 6 dimensions:
 1. budgetAvailabilityScore: Grade based on whether funding is already pre-allocated or secured vs. requested or unfunded.
-2. dataAvailabilityScore: Grade based on defined integrations (e.g. Veeva, Adobe Target) and availability/readiness of source data.
+2. dataAvailabilityScore: Grade based on defined integrations (e.g. Veeva, Adobe Target) and availability/readiness of source data. Read the "Data Readiness Details" provided: if the datasets are already clean, fully available, and ready for integration, assign a high score (85-100); if the description indicates they are missing, unformatted, or unavailable, assign a low score (under 60).
 3. stakeholderReadinessScore: Grade based on sponsor support and brand team alignment.
 4. impactOfNotDoingScore: Grade based on opportunity cost, status quo bottleneck, and compliance risks if we fail to act.
 5. financialBusinessCaseScore: Grade based on projected ROI ratio (annualized ROI vs. implementation budget required).
@@ -389,6 +395,7 @@ Problem: ${proposal.problemStatement}
 Integrations Needed: ${proposal.integrations.join(', ')}
 Budget Status: ${proposal.budgetStatus}
 Stakeholder Alignment: ${proposal.stakeholderStatus}
+Data Readiness Details: ${proposal.dataReadiness}
 Impact of Not Doing: ${proposal.opportunityCost}
 Business Case: ${proposal.businessCase}
 Financial ROI: $${proposal.financialRoi}/yr
@@ -418,7 +425,7 @@ Therapeutic Areas: ${proposal.therapeuticAreas.join(', ')}`;
     // Fallback scores
     return {
       budgetAvailabilityScore: proposal.budgetStatus.toLowerCase().includes('allocate') ? 95.0 : 70.0,
-      dataAvailabilityScore: proposal.integrations.length > 0 ? 85.0 : 60.0,
+      dataAvailabilityScore: (proposal.dataReadiness.toLowerCase().includes('ready') || proposal.dataReadiness.toLowerCase().includes('clean') || proposal.dataReadiness.toLowerCase().includes('avail') || proposal.integrations.length > 0) ? 85.0 : 60.0,
       stakeholderReadinessScore: proposal.stakeholderStatus.toLowerCase().includes('sponsor') || proposal.stakeholderStatus.toLowerCase().includes('align') ? 90.0 : 75.0,
       impactOfNotDoingScore: proposal.opportunityCost.length > 20 ? 85.0 : 65.0,
       financialBusinessCaseScore: proposal.financialRoi > proposal.budgetRequiredVal * 2 ? 95.0 : 75.0,

@@ -93,7 +93,8 @@ export async function POST(request: Request) {
       businessCaseFile,
       submittedBy,
       submittedAt,
-      feedback
+      feedback,
+      dataReadiness
     } = body;
 
     const safeString = (val: any, fallback = ''): string => {
@@ -154,7 +155,7 @@ export async function POST(request: Request) {
     const calculatedBudget = bReqY1 + bReqY2 + bReqY3;
 
     // Build embedding text representation
-    const embedTextStr = `${finalTitle} ${finalProblem} ${safeStringArray(integrations).join(' ')} ${finalDomains.join(' ')} ${safeStringArray(therapeuticAreas).join(' ')}`;
+    const embedTextStr = `${finalTitle} ${finalProblem} ${safeStringArray(integrations).join(' ')} ${finalDomains.join(' ')} ${safeStringArray(therapeuticAreas).join(' ')} ${safeString(dataReadiness)}`;
 
     if (id) {
       // Update existing project
@@ -198,6 +199,7 @@ export async function POST(request: Request) {
           businessCaseRationale: safeString(businessCaseRationale),
           dependencies: safeString(dependencies),
           businessCaseFile: safeString(businessCaseFile),
+          dataReadiness: safeString(dataReadiness),
           submittedBy: safeString(submittedBy),
           submittedAt: finalSubmittedAt,
           feedback: safeString(feedback)
@@ -256,6 +258,7 @@ export async function POST(request: Request) {
           businessCaseRationale: safeString(businessCaseRationale),
           dependencies: safeString(dependencies),
           businessCaseFile: safeString(businessCaseFile),
+          dataReadiness: safeString(dataReadiness),
           submittedBy: safeString(submittedBy),
           submittedAt: finalSubmittedAt,
           feedback: safeString(feedback)

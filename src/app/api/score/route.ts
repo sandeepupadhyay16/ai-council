@@ -16,7 +16,8 @@ export async function POST(request: Request) {
       budgetRequiredVal, 
       functionalDomain, 
       functionalDomains,
-      therapeuticAreas 
+      therapeuticAreas,
+      dataReadiness
     } = proposal;
 
     if (!title || !problemStatement) {
@@ -39,7 +40,8 @@ export async function POST(request: Request) {
       financialRoi: Number(financialRoi) || 0,
       budgetRequiredVal: Number(budgetRequiredVal) || 0,
       functionalDomains: finalDomains,
-      therapeuticAreas: therapeuticAreas || ['Oncology']
+      therapeuticAreas: therapeuticAreas || ['Oncology'],
+      dataReadiness: dataReadiness || ''
     });
 
     return NextResponse.json(scores);

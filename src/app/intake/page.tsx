@@ -70,6 +70,7 @@ export default function IntakePage() {
     }
   };
   const [integrationsText, setIntegrationsText] = useState('');
+  const [dataReadiness, setDataReadiness] = useState('');
   const [problem, setProblem] = useState('');
   const [budgetStatus, setBudgetStatus] = useState('Pre-allocated in standard budget');
   const [stakeholderStatus, setStakeholderStatus] = useState('');
@@ -133,6 +134,7 @@ export default function IntakePage() {
               setBusinessCaseRationale(data.businessCaseRationale || '');
               setBusinessCaseFile(data.businessCaseFile || '');
               setDependencies(data.dependencies || '');
+              setDataReadiness(data.dataReadiness || '');
             }
           });
       }
@@ -201,6 +203,7 @@ export default function IntakePage() {
           businessCaseRationale,
           dependencies,
           businessCaseFile,
+          dataReadiness,
           submittedBy: currentPersona.name
         })
       });
@@ -437,7 +440,8 @@ export default function IntakePage() {
           financialRoi: Number(roiY1),
           budgetRequiredVal: Number(bY1) + Number(bY2) + Number(bY3),
           functionalDomains: selectedDomains,
-          therapeuticAreas: selectedTAs
+          therapeuticAreas: selectedTAs,
+          dataReadiness
         })
       });
       const data = await res.json();
@@ -458,7 +462,7 @@ export default function IntakePage() {
       console.error(err);
       // Fallback
       setBudgetAvailabilityScore(80.0);
-      setDataAvailabilityScore(integrationsText.split(',').map(s => s.trim()).filter(Boolean).length > 0 ? 85.0 : 60.0);
+      setDataAvailabilityScore((dataReadiness.length > 20 || integrationsText.split(',').map(s => s.trim()).filter(Boolean).length > 0) ? 85.0 : 60.0);
       setStakeholderReadinessScore(stakeholderStatus.length > 20 ? 90.0 : 70.0);
       setImpactOfNotDoingScore(opportunityCost.length > 20 ? 85.0 : 65.0);
       setFinancialBusinessCaseScore(75.0);
@@ -510,6 +514,7 @@ export default function IntakePage() {
           businessCaseRationale,
           dependencies,
           businessCaseFile,
+          dataReadiness,
           submittedBy: currentPersona.name
         })
       });
@@ -651,6 +656,18 @@ export default function IntakePage() {
                   onChange={(e) => setIntegrationsText(e.target.value)}
                   placeholder="e.g. Veeva CRM, Adobe Target, Salesforce"
                   className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0a0a0a] focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all"
+                />
+              </div>
+
+              {/* Data Availability & Readiness details */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-slate-700 font-semibold">Data Availability & Readiness Details</label>
+                <textarea
+                  rows={2}
+                  value={dataReadiness}
+                  onChange={(e) => setDataReadiness(e.target.value)}
+                  placeholder="What datasets are required? Are they clean, compliant, and ready? (e.g. Veeva customer lists, IQVIA claims databases)"
+                  className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0a0a0a] focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all leading-relaxed"
                 />
               </div>
 

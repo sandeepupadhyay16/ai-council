@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       for (const idea of ideasToCommit) {
         // Evaluate scores dynamically
         const budgetAvailabilityScore = idea.financialRoi > 500000 ? 95.0 : 70.0;
-        const dataAvailabilityScore = idea.integrations.length > 0 ? 85.0 : 65.0;
+        const dataAvailabilityScore = (idea.dataReadiness && idea.dataReadiness.length > 20) || idea.integrations.length > 0 ? 85.0 : 65.0;
         const stakeholderReadinessScore = 80.0;
         const impactOfNotDoingScore = idea.opportunityCost.length > 20 ? 85.0 : 70.0;
         const financialBusinessCaseScore = 80.0;
@@ -107,12 +107,13 @@ export async function POST(request: Request) {
             businessCaseRationale: idea.businessCase || '',
             dependencies: '',
             businessCaseFile: '',
+            dataReadiness: idea.dataReadiness || '',
             submittedBy: submittedBy
           }
         });
 
         // Create embedding
-        const embedTextStr = `${newProject.title} ${newProject.problemStatement} ${(newProject.integrations || []).join(' ')} ${(newProject.functionalDomains || []).join(' ')} ${(newProject.therapeuticAreas || []).join(' ')}`;
+        const embedTextStr = `${newProject.title} ${newProject.problemStatement} ${(newProject.integrations || []).join(' ')} ${(newProject.functionalDomains || []).join(' ')} ${(newProject.therapeuticAreas || []).join(' ')} ${newProject.dataReadiness || ''}`;
         const embedding = await embedText(embedTextStr);
         const embeddingStr = `[${embedding.join(',')}]`;
 

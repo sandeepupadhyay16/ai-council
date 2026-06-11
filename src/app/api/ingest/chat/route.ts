@@ -36,6 +36,7 @@ You MUST return a valid JSON object. Do not include markdown formatting or code 
   "integrations": ["Veeva", "Salesforce CRM"],
   "budgetStatus": "Funding status or allocation details discussed",
   "stakeholderStatus": "Sponsorship and stakeholder alignment details",
+  "dataReadiness": "Description of data availability, cleanliness, compliance, or source systems discussed",
   "opportunityCost": "What happens if we do not do this project?",
   "businessCase": "Expected operational efficiency or savings",
   "financialRoi": 250000,
@@ -82,7 +83,7 @@ Be realistic. "financialRoi" and "budgetRequiredVal" must be positive numbers. "
 
     // Evaluate scores dynamically
     const budgetAvailabilityScore = idea.financialRoi > 400000 ? 90.0 : 75.0;
-    const dataAvailabilityScore = idea.integrations.length > 0 ? 85.0 : 65.0;
+    const dataAvailabilityScore = (idea.dataReadiness && idea.dataReadiness.length > 20) || idea.integrations.length > 0 ? 85.0 : 65.0;
     const stakeholderReadinessScore = 80.0;
     const impactOfNotDoingScore = idea.opportunityCost.length > 20 ? 85.0 : 70.0;
     const financialBusinessCaseScore = idea.financialRoi > idea.budgetRequiredVal * 2 ? 90.0 : 75.0;
@@ -120,12 +121,13 @@ Be realistic. "financialRoi" and "budgetRequiredVal" must be positive numbers. "
         financialBusinessCaseScore,
         budgetRequiredScore,
         readinessScore,
-        functionalDomains: idea.functionalDomains
+        functionalDomains: idea.functionalDomains,
+        dataReadiness: idea.dataReadiness || ''
       }
     });
 
     // Generate vector embedding
-    const embedTextStr = `${project.title} ${project.problemStatement} ${(project.integrations || []).join(' ')} ${(project.functionalDomains || []).join(' ')} ${(project.therapeuticAreas || []).join(' ')}`;
+    const embedTextStr = `${project.title} ${project.problemStatement} ${(project.integrations || []).join(' ')} ${(project.functionalDomains || []).join(' ')} ${(project.therapeuticAreas || []).join(' ')} ${project.dataReadiness || ''}`;
     const embedding = await embedText(embedTextStr);
     const embeddingStr = `[${embedding.join(',')}]`;
 

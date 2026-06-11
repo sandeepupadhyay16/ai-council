@@ -59,6 +59,7 @@ model Project {
   businessCaseRationale      String     @default("")
   dependencies                String     @default("")
   businessCaseFile            String     @default("")
+  dataReadiness               String     @default("") // Data availability and readiness details
   
   functionalDomains   String[]           // e.g., ["Omnichannel Intelligence"]
   

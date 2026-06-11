@@ -12,6 +12,7 @@ export interface Project {
   budgetStatus: string;
   stakeholderStatus: string;
   opportunityCost: string;
+  dataReadiness?: string;
   businessCase: string;
   financialRoi: number;
   budgetRequiredVal: number;
@@ -266,6 +267,23 @@ export default function ProjectDetailModal({ project, onClose, onRefresh }: Proj
                   <span className="text-xs text-slate-450 italic">No integrations specified.</span>
                 )}
               </div>
+            </div>
+          </div>
+
+          {/* Data Readiness & Stakeholder Readiness Details */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Data Availability & Readiness Details</h4>
+              <p className="text-xs text-slate-655 leading-relaxed bg-white p-4 rounded-xl border border-slate-200 min-h-[72px] overflow-y-auto">
+                {project.dataReadiness || 'No explicit data availability or compliance readiness details provided.'}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Stakeholder Readiness Details</h4>
+              <p className="text-xs text-slate-655 leading-relaxed bg-white p-4 rounded-xl border border-slate-200 min-h-[72px] overflow-y-auto">
+                {project.stakeholderStatus || 'No executive sponsor details or brand team readiness comments recorded.'}
+              </p>
             </div>
           </div>
 

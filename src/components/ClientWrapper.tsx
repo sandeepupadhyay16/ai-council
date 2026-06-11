@@ -378,6 +378,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     financialRoi: 0,
     budgetRequiredVal: 0,
     stakeholderStatus: '',
+    dataReadiness: '',
     financialRoiY1: 0,
     financialRoiY2: 0,
     financialRoiY3: 0,
@@ -552,6 +553,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
         financialRoi: 0,
         budgetRequiredVal: 0,
         stakeholderStatus: '',
+        dataReadiness: '',
         financialRoiY1: 0,
         financialRoiY2: 0,
         financialRoiY3: 0,
@@ -834,11 +836,12 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     if (!state.financialRoi || Number(state.financialRoi) <= 0) missing.push('financialRoi');
     if (!state.budgetRequiredVal || Number(state.budgetRequiredVal) <= 0) missing.push('budgetRequiredVal');
     if (!state.stakeholderStatus?.trim()) missing.push('stakeholderStatus');
+    if (!state.dataReadiness?.trim()) missing.push('dataReadiness');
     return missing;
   };
 
   const missingFields = getMissingFieldsList(ideaState);
-  const totalFieldsCount = 10;
+  const totalFieldsCount = 11;
   const progressPercent = Math.round(((totalFieldsCount - missingFields.length) / totalFieldsCount) * 100);
 
   // 3-Year financial calculations
@@ -1440,7 +1443,8 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
                             { id: 'businessCase', label: 'Business Case' },
                             { id: 'financialRoi', label: 'ROI' },
                             { id: 'budgetRequiredVal', label: 'Cost' },
-                            { id: 'stakeholderStatus', label: 'Stakeholders' }
+                            { id: 'stakeholderStatus', label: 'Stakeholders' },
+                            { id: 'dataReadiness', label: 'Data Readiness' }
                           ].map((f) => {
                             const isFilled = f.id === 'therapeuticAreas' || f.id === 'integrations' || f.id === 'functionalDomains'
                               ? (ideaState[f.id] && ideaState[f.id].length > 0)
@@ -1745,6 +1749,22 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
                           }}
                           className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-[#0a0a0a]"
                           placeholder="e.g. Veeva CRM, Adobe Target, Salesforce"
+                        />
+                      </div>
+
+                      {/* Data Readiness details */}
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Data Availability & Readiness</label>
+                        <textarea
+                          rows={2}
+                          value={ideaState.dataReadiness || ''}
+                          onChange={(e) => {
+                            const updated = { ...ideaState, dataReadiness: e.target.value };
+                            setIdeaState(updated);
+                            saveActiveSession(chatMessages, updated, agentInsights, brainstormMode);
+                          }}
+                          className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-[#0a0a0a]"
+                          placeholder="Describe data readiness. Are target datasets clean, compliant, and ready?"
                         />
                       </div>
 

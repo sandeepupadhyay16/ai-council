@@ -11,6 +11,7 @@ export interface IdeaState {
   financialRoi: number;
   budgetRequiredVal: number;
   stakeholderStatus: string;
+  dataReadiness: string;
 }
 
 export interface CollectionResult {
@@ -70,7 +71,7 @@ AGENT PERSONAS & DIRECTIVES:
    - Task: Briefly check for overlaps with search matches. State if this is unique or a duplicate. (Max 1 sentence).
 2. COLLECTION (Intake Extractor):
    - Task: Extract brainstormed project details from the conversation. Validate if they are sufficiently filled. Map properties to the schema.
-   - Required Fields for Submission: 'title', 'problemStatement', 'functionalDomains', 'therapeuticAreas', 'integrations', 'opportunityCost', 'businessCase', 'financialRoi', 'budgetRequiredVal', 'stakeholderStatus'.
+   - Required Fields for Submission: 'title', 'problemStatement', 'functionalDomains', 'therapeuticAreas', 'integrations', 'opportunityCost', 'businessCase', 'financialRoi', 'budgetRequiredVal', 'stakeholderStatus', 'dataReadiness'.
    - Allowed domains include: "Omnichannel Intelligence", "Campaign Measurement Intelligence", "Patient Identification", "Field Force Automation". Custom domains can be defined, and a project can span multiple domains.
    - Allowed areas: "Oncology", "Vaccines", "Rare Diseases", "Inflammation & Immunology", "Internal Medicine". Allowed integrations: "Veeva Link / CRM", "Adobe Target", "Salesforce CRM", "Epic EHR", "Custom APIs".
 3. BRAINSTORMER (Commercial AI Consultant):
@@ -101,11 +102,12 @@ YOUR RESPONSE MUST BE A SINGLE VALID JSON OBJECT. Do not include markdown code b
     "businessCase": "Clean business case details or empty string",
     "financialRoi": 200000,
     "budgetRequiredVal": 80000,
-    "stakeholderStatus": "Clean stakeholder status details or empty string"
+    "stakeholderStatus": "Clean stakeholder status details or empty string",
+    "dataReadiness": "Clean data readiness details or empty string"
   },
   "collection": {
     "isReadyToSubmit": false,
-    "missingFields": ["List of missing field names among: title, problemStatement, functionalDomains, therapeuticAreas, integrations, opportunityCost, businessCase, financialRoi, budgetRequiredVal, stakeholderStatus"],
+    "missingFields": ["List of missing field names among: title, problemStatement, functionalDomains, therapeuticAreas, integrations, opportunityCost, businessCase, financialRoi, budgetRequiredVal, stakeholderStatus, dataReadiness"],
     "nextSteps": "Guidance telling the user what specific details to discuss next to finish drafting this use case."
   },
   "checkerInsight": "Strictly 1 short sentence check of duplicates vs matching database projects",
@@ -147,6 +149,7 @@ YOUR RESPONSE MUST BE A SINGLE VALID JSON OBJECT. Do not include markdown code b
       parsed.ideaState.financialRoi = Number(parsed.ideaState.financialRoi) || 0;
       parsed.ideaState.budgetRequiredVal = Number(parsed.ideaState.budgetRequiredVal) || 0;
       parsed.ideaState.stakeholderStatus = parsed.ideaState.stakeholderStatus || '';
+      parsed.ideaState.dataReadiness = parsed.ideaState.dataReadiness || '';
 
       parsed.collection = parsed.collection || {};
       parsed.collection.isReadyToSubmit = !!parsed.collection.isReadyToSubmit;
@@ -177,11 +180,12 @@ YOUR RESPONSE MUST BE A SINGLE VALID JSON OBJECT. Do not include markdown code b
         businessCase: '',
         financialRoi: 0,
         budgetRequiredVal: 0,
-        stakeholderStatus: ''
+        stakeholderStatus: '',
+        dataReadiness: ''
       },
       collection: {
         isReadyToSubmit: false,
-        missingFields: ['title', 'problemStatement', 'functionalDomains', 'therapeuticAreas', 'integrations'],
+        missingFields: ['title', 'problemStatement', 'functionalDomains', 'therapeuticAreas', 'integrations', 'dataReadiness'],
         nextSteps: 'Please enter a name or description for your AI idea so the agents can brainstorm.'
       },
       checkerInsight: 'Offline: Waiting for a complete project definition to check duplicates.',
